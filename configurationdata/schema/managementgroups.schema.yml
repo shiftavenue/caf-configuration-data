@@ -1,0 +1,34 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/cafmanagementgroups
+title: CAF management group configuration
+description: Management group configuration for the Cloud Adoption Framework
+type: object
+patternProperties:
+  '[\w-]':
+    display_name:
+      type: string
+      description: The display name of the management group
+    parent_management_group_id:
+      type: string
+      description: The parent management group id (in our case the name)
+    subscription_ids:
+      type: array
+      items:
+        type: string
+      description: The list of subscription ids to assign to the management group
+    archetype_config:
+      type: object
+      properties:
+        archetype_id:
+          type: string
+          description: The archetype id to use for the management group
+        parameters:
+          type: object
+          description: The parameters for the archetype
+        access_control:
+          type: object
+          description: The access control configuration for the archetype
+      required:
+        - archetype_id
+        - parameters
+        - access_control
