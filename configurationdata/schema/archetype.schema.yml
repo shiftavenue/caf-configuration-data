@@ -1,0 +1,43 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/archetype
+title: CAF Terraform Archetype Definition
+description: A CAF Terraform Archetype Definition with its top-level properties
+type: object
+patternProperties:
+  '[\w-]':
+    description: The name of the archetype
+    type: object
+    properties:
+      policy_assignments:
+        description: The list of policy assignments to deploy for the archetype
+        type: array
+        items:
+          type: string
+      policy_definitions:
+        description: The list of policy definitions to deploy for the archetype
+        type: array
+        items:
+          type: string
+      policy_set_definitions:
+        description: The list of policy set definitions to deploy for the archetype
+        type: array
+        items:
+          type: string
+      role_definitions:
+        description: The list of role definitions to deploy for the archetype
+        type: array
+        items:
+          type: string
+      archetype_config:
+        description: The archetype configuration
+        type: object
+        properties:
+          access_control:
+            description: The access control configuration for the archetype
+            type: object
+          parameters:
+            description: The parameters for the archetype
+            type: object
+        required:
+          - access_control
+          - parameters
