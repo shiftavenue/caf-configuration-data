@@ -1,0 +1,19 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/cafsubscription
+title: CAF Subscription Configuration
+description: CAF Subscription Association
+type: object
+properties:
+  identity:
+    type: string
+    format: uuid
+  connectivity:
+    type: string
+    format: uuid
+  management:
+    type: string
+    format: uuid
+required:
+  - identity
+  - connectivity
+  - management
