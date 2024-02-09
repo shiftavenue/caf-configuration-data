@@ -1,4 +1,5 @@
 name: APP_XY
+description: Our LOB app "XY"
 display_name: The XY Application
 id: 
 alias_name: appxy

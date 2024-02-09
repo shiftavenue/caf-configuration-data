@@ -1,0 +1,65 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/applicationlandingzone
+title: Application Landing Zone
+description: An Azure Landing Zone for one subscription
+type: object
+properties:
+  name:
+    type: string
+    description: The name of the application
+  description:
+    type: string
+    description: The subscription details to deploy for the application
+  display_name:
+    type: string
+  id:
+    type:
+      - string
+      - "null"
+  alias_name:
+    type: string
+  workload:
+    type: string
+    enum:
+      - Production
+      - DevTest
+  managementgroup_id:
+    type: string
+    description: The management group id to deploy the subscription to
+  deploy_user_assigned_managed_identity:
+    type: boolean
+  networks:
+    type: object
+    patternProperties:
+      '\w+':
+        type: object
+        properties:
+          name:
+            type: string
+          address_space:
+            type: array
+            items:
+              type: string
+              pattern: "^([0-9]{1,3}.){3}[0-9]{1,3}(/([0-9]{1,2}))$"
+          resource_group_name:
+            type: string
+          hub_peering_enabled:
+            type: boolean
+          hub_network_resource_id:
+            type:
+              - string
+              - "null"
+  tags:
+    description: Tags for the product
+    type: object
+required:
+  - name
+  - description
+  - display_name
+  - id
+  - alias_name
+  - workload
+  - managementgroup_id
+  - deploy_user_assigned_managed_identity
+  - networks
+  - tags
