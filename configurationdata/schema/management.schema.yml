@@ -1,0 +1,104 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/cafmanagement
+title: CAF management Configuration
+description: management configuration for the Cloud Adoption Framework
+type: object
+required:
+  - settings
+  - location
+properties:
+  tags:
+    type: object
+  location:
+    type: string
+    description: The location of the resources
+  advanced:
+    type: object
+    properties:
+      resource_suffix:
+        type: string
+      existing_resource_group_name:
+        type: string
+      existing_log_analytics_workspace_resource_id:
+        type: string
+      existing_automation_account_resource_id:
+        type: string
+      link_log_analytics_to_automation_account:
+        type: boolean
+  settings:
+    type: object
+    properties:
+      log_analytics:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          config:
+            type: object
+            properties:
+              retention_in_days:
+                type: integer
+              enable_monitoring_for_vm:
+                type: boolean
+              enable_monitoring_for_vmss:
+                type: boolean
+              enable_solution_for_agent_health_assessment:
+                type: boolean
+              enable_solution_for_anti_malware:
+                type: boolean
+              enable_solution_for_change_tracking:
+                type: boolean
+              enable_solution_for_service_map:
+                type: boolean
+              enable_solution_for_sql_assessment:
+                type: boolean
+              enable_solution_for_sql_vulnerability_assessment:
+                type: boolean
+              enable_solution_for_sql_advanced_threat_detection:
+                type: boolean
+              enable_solution_for_updates:
+                type: boolean
+              enable_solution_for_vm_insights:
+                type: boolean
+              enable_solution_for_container_insights:
+                type: boolean
+              enable_sentinel:
+                type: boolean
+      security_center:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          config:
+            type: object
+            properties:
+              email_security_contact:
+                type: string
+              enable_defender_for_apis:
+                type: boolean
+              enable_defender_for_app_services:
+                type: boolean
+              enable_defender_for_arm:
+                type: boolean
+              enable_defender_for_containers:
+                type: boolean
+              enable_defender_for_cosmosdbs:
+                type: boolean
+              enable_defender_for_cspm:
+                type: boolean
+              enable_defender_for_dns:
+                type: boolean
+              enable_defender_for_key_vault:
+                type: boolean
+              enable_defender_for_oss_databases:
+                type: boolean
+              enable_defender_for_servers:
+                type: boolean
+              enable_defender_for_servers_vulnerability_assessments:
+                type: boolean
+              enable_defender_for_sql_servers:
+                type: boolean
+              enable_defender_for_sql_server_vms:
+                type: boolean
+              enable_defender_for_storage:
+                type: boolean
