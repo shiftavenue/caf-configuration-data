@@ -1,0 +1,8 @@
+{
+    "yaml.schemas": {
+        "configurationdata/schema/applicationlandingzone.schema.yml": "applicationlandingzones/*.yml",
+        "configurationdata/schema/identity.schema.yml": "identity.yml",
+        "configurationdata/schema/subscriptions.schema.yml": "subscriptions.yml",
+        "configurationdata/schema/archetype.schema.yml": "archetypes/*.yml"
+    }
+}

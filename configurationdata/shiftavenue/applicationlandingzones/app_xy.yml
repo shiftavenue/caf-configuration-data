@@ -1,0 +1,21 @@
+name: APP_XY
+display_name: The XY Application
+id: 
+alias_name: appxy
+workload: DevTest
+managementgroup_id: sandbox
+deploy_user_assigned_managed_identity: true
+role_assignment_enabled: false
+role_assignments: {}
+networks:
+  vn1:
+    name: "vnet-appxy"
+    address_space:
+      - "10.174.130.0/24"
+    resource_group_name: "rg-appxy"
+    hub_peering_enabled: true
+    hub_network_resource_id: '${vnet}'
+    hub_peering_use_remote_gateways: false
+    hub_peering_name_tohub: 'appxy-to-${vnetname}'  #The name of the peering to the hub network. [optional - leave empty to use calculated name]
+    hub_peering_name_fromhub: '${vnetname}-to-appxy' #The name of the peering from the hub network. [optional - leave empty to use calculated name]
+tags: {}

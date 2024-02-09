@@ -1,0 +1,12 @@
+Archetype definitions go here! They can be either json or yaml, and are structured thusly:
+
+```yaml
+archetype-name:
+  policy_assignments: []
+  policy_definitions: []
+  policy_set_definitions: []
+  role_definitions: []
+  archetype_config:
+    access_control: {}
+    parameters: {}
+```

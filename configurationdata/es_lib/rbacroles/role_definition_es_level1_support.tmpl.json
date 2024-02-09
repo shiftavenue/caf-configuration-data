@@ -1,0 +1,24 @@
+{
+  "type": "Microsoft.Authorization/roleDefinitions",
+  "properties": {
+    "permissions": [
+      {
+        "notDataActions": [],
+        "actions": [
+          "*/read",
+          "Microsoft.Support/*"
+        ],
+        "notActions": [],
+        "dataActions": []
+      }
+    ],
+    "type": "customRole",
+    "roleName": "Reader-Support-Tickets",
+    "description": "View everything in the subscription and also open support tickets.",
+    "assignableScopes": [
+      "${current_scope_resource_id}"
+    ]
+  },
+  "name": "8753b9c9-07db-4073-98fb-4a7ab1e2ffe5",
+  "apiVersion": "2022-04-01"
+}

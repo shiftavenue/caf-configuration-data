@@ -1,0 +1,10 @@
+# Non-standard management groups should be kept at a minimum in order
+# to fully benefit from the Azure Enterprise Scale architecture.
+"${rootid}-caf-is-too-small-for-me":
+  display_name: "I did not find a management group that fits my needs"
+  parent_management_group_id: "${rootid}-landing-zones"
+  subscription_ids: []
+  archetype_config:
+    archetype_id: "${rootid}-caf-is-too-small-for-me" # In case you also need your own archetype
+    parameters: {}
+    access_control: {}
