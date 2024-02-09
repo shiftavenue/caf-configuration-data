@@ -90,7 +90,7 @@ settings:
   vwan_hub_networks: []
   ddos_protection_plan:
     enabled: true
-    config:
+    config: {}
   dns:
     enabled: true
     config:

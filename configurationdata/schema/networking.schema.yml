@@ -1,0 +1,313 @@
+$schema: https://json-schema.org/draft-07/schema#
+$id: https://shiftavenue.com/cafnetworking
+title: CAF Networking Settings
+description: Network configuration for a CAF Terraform deployment
+type: object
+properties:
+  settings:
+    type: object
+    properties:
+      ddos_protection_plan:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          config:
+            type: object
+            properties:
+              location:
+                type: string
+              sku:
+                type: string
+      dns:
+        type: object
+        properties:
+          enabled:
+            type: boolean
+          config:
+            type: object
+            properties:
+              enable_private_link_by_service:
+                type: object
+                properties:
+                  azure_api_management:
+                    type: boolean
+                  azure_app_configuration_stores:
+                    type: boolean
+                  azure_arc:
+                    type: boolean
+                  azure_automation_dscandhybridworker:
+                    type: boolean
+                  azure_automation_webhook:
+                    type: boolean
+                  azure_backup:
+                    type: boolean
+                  azure_batch_account:
+                    type: boolean
+                  azure_bot_service_bot:
+                    type: boolean
+                  azure_bot_service_token:
+                    type: boolean
+                  azure_cache_for_redis:
+                    type: boolean
+                  azure_cache_for_redis_enterprise:
+                    type: boolean
+                  azure_container_registry:
+                    type: boolean
+                  azure_cosmos_db_cassandra:
+                    type: boolean
+                  azure_cosmos_db_gremlin:
+                    type: boolean
+                  azure_cosmos_db_mongodb:
+                    type: boolean
+                  azure_cosmos_db_sql:
+                    type: boolean
+                  azure_cosmos_db_table:
+                    type: boolean
+                  azure_data_explorer:
+                    type: boolean
+                  azure_data_factory:
+                    type: boolean
+                  azure_data_factory_portal:
+                    type: boolean
+                  azure_data_health_data_services:
+                    type: boolean
+                  azure_data_lake_file_system_gen2:
+                    type: boolean
+                  azure_database_for_mariadb_server:
+                    type: boolean
+                  azure_database_for_mysql_server:
+                    type: boolean
+                  azure_database_for_postgresql_server:
+                    type: boolean
+                  azure_digital_twins:
+                    type: boolean
+                  azure_event_grid_domain:
+                    type: boolean
+                  azure_event_grid_topic:
+                    type: boolean
+                  azure_event_hubs_namespace:
+                    type: boolean
+                  azure_file_sync:
+                    type: boolean
+                  azure_hdinsights:
+                    type: boolean
+                  azure_iot_dps:
+                    type: boolean
+                  azure_iot_hub:
+                    type: boolean
+                  azure_key_vault:
+                    type: boolean
+                  azure_key_vault_managed_hsm:
+                    type: boolean
+                  azure_kubernetes_service_management:
+                    type: boolean
+                  azure_machine_learning_workspace:
+                    type: boolean
+                  azure_managed_disks:
+                    type: boolean
+                  azure_media_services:
+                    type: boolean
+                  azure_migrate:
+                    type: boolean
+                  azure_monitor:
+                    type: boolean
+                  azure_purview_account:
+                    type: boolean
+                  azure_purview_studio:
+                    type: boolean
+                  azure_relay_namespace:
+                    type: boolean
+                  azure_search_service:
+                    type: boolean
+                  azure_service_bus_namespace:
+                    type: boolean
+                  azure_site_recovery:
+                    type: boolean
+                  azure_sql_database_sqlserver:
+                    type: boolean
+                  azure_synapse_analytics_dev:
+                    type: boolean
+                  azure_synapse_analytics_sql:
+                    type: boolean
+                  azure_synapse_studio:
+                    type: boolean
+                  azure_web_apps_sites:
+                    type: boolean
+                  azure_web_apps_static_sites:
+                    type: boolean
+                  cognitive_services_account:
+                    type: boolean
+                  microsoft_power_bi:
+                    type: boolean
+                  signalr:
+                    type: boolean
+                  signalr_webpubsub:
+                    type: boolean
+                  storage_account_blob:
+                    type: boolean
+                  storage_account_file:
+                    type: boolean
+                  storage_account_queue:
+                    type: boolean
+                  storage_account_table:
+                    type: boolean
+                  storage_account_web:
+                    type: boolean
+              private_link_locations:
+                type: array
+                items:
+                  type: string
+              public_dns_zones:
+                type: array
+                items:
+                  type: string
+              private_dns_zones:
+                type: array
+                items:
+                  type: string
+              enable_private_dns_zone_virtual_network_link_on_hubs:
+                type: boolean
+              enable_private_dns_zone_virtual_network_link_on_spokes:
+                type: boolean
+              virtual_network_resource_ids_to_link:
+                type: array
+                items:
+                  type: string
+      vwan_hub_networks:
+        type: array
+        items:
+          type: object
+      hub_networks:
+        type: array
+        items:
+          type: object
+          properties:
+            enabled:
+              type: boolean
+            config:
+              type: object
+              properties:
+                location:
+                  type: string
+                address_space:
+                  type: array
+                  items:
+                    type: string
+                link_to_ddos_protection_plan:
+                  type: boolean
+                dns_servers:
+                  type: array
+                  items:
+                    type: string
+                bgp_community:
+                  type: string
+                subnets:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      address_prefix:
+                        type: string
+                      service_endpoints:
+                        type: array
+                        items:
+                          type: string
+                      route_table_id:
+                        type: string
+                      security_group_id:
+                        type: string
+                      nat_gateway_id:
+                        type: string
+                      network_security_group_id:
+                        type: string
+                      service_association_links:
+                        type: array
+                        items:
+                          type: string
+                virtual_network_gateway:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                    config:
+                      type: object
+                      properties:
+                        address_prefix:
+                          type: string
+                        gateway_sku_expressroute:
+                          type: string
+                        gateway_sku_vpn:
+                          type: string
+                        advanced_vpn_settings:
+                          type: object
+                          properties:
+                            enable_bgp:
+                              type: boolean
+                            active_active:
+                              type: boolean
+                            private_ip_address_allocation:
+                              type: string
+                            default_local_network_gateway_id:
+                              type: string
+                            vpn_client_configuration:
+                              type: array
+                              items:
+                                type: string
+                            bgp_settings:
+                              type: array
+                              items:
+                                type: string
+                            custom_route:
+                              type: array
+                              items:
+                                type: string
+                azure_firewall:
+                  type: object
+                  properties:
+                    enabled:
+                      type: boolean
+                    config:
+                      type: object
+                      properties:
+                        address_prefix:
+                          type: string
+                        enable_dns_proxy:
+                          type: boolean
+                        dns_servers:
+                          type: array
+                          items:
+                            type: string
+                        sku_tier:
+                          type: string
+                        base_policy_id:
+                          type: string
+                        private_ip_ranges:
+                          type: array
+                          items:
+                            type: string
+                        threat_intelligence_mode:
+                          type: string
+                        threat_intelligence_allowlist:
+                          type: array
+                          items:
+                            type: string
+                        availability_zones:
+                          type: object
+                          properties:
+                            zone_1:
+                              type: boolean
+                            zone_2:
+                              type: boolean
+                            zone_3:
+                              type: boolean
+                    spoke_virtual_network_resource_ids:
+                      type: array
+                      items:
+                        type: string
+                    enable_outbound_virtual_network_peering:
+                      type: boolean
+                    enable_hub_network_mesh_peering:
+                      type: boolean

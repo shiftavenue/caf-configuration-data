@@ -3,6 +3,9 @@
         "configurationdata/schema/applicationlandingzone.schema.yml": "applicationlandingzones/*.yml",
         "configurationdata/schema/identity.schema.yml": "identity.yml",
         "configurationdata/schema/subscriptions.schema.yml": "subscriptions.yml",
-        "configurationdata/schema/archetype.schema.yml": "archetypes/*.yml"
+        "configurationdata/schema/archetype.schema.yml": "archetypes/*.yml",
+        "configurationdata/schema/managementgroups.schema.yml": "nonstandard-management-groups.yml",
+        "configurationdata/schema/management.schema.yml": "management.yml",
+        "configurationdata/schema/networking.schema.yml": "networking.yml"
     }
 }
