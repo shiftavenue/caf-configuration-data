@@ -5,6 +5,6 @@
   parent_management_group_id: "${rootid}-landing-zones"
   subscription_ids: []
   archetype_config:
-    archetype_id: "${rootid}-caf-is-too-small-for-me" # In case you also need your own archetype
+    archetype_id: default_empty # Or define your own, e.g. "${rootid}-caf-is-too-small-for-me"
     parameters: {}
     access_control: {}
