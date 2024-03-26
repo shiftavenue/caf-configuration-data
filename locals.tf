@@ -1,10 +1,5 @@
 
 locals {
-  subscriptions     = yamldecode(file("${path.module}/../configurationdata/${var.root_id}/subscriptions.yml"))
-  network_config    = yamldecode(file("${path.module}/../configurationdata/${var.root_id}/networking.yml"))
-  identity_config   = yamldecode(file("${path.module}/../configurationdata/${var.root_id}/identity.yml"))
-  management_config = yamldecode(file("${path.module}/../configurationdata/${var.root_id}/management.yml"))
-
   hub_networks_by_location = {
     for i, v in module.enterprise_scale.azurerm_virtual_network.connectivity :
     v.location => v

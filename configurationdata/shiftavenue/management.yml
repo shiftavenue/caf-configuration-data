@@ -8,10 +8,10 @@ settings:
       enable_solution_for_agent_health_assessment: true
       enable_solution_for_anti_malware: true
       enable_solution_for_change_tracking: true
-      enable_solution_for_service_map: false
-      enable_solution_for_sql_assessment: false
-      enable_solution_for_sql_vulnerability_assessment: false
-      enable_solution_for_sql_advanced_threat_detection: false
+      enable_solution_for_service_map: true
+      enable_solution_for_sql_assessment: true
+      enable_solution_for_sql_vulnerability_assessment: true
+      enable_solution_for_sql_advanced_threat_detection: true
       enable_solution_for_updates: true
       enable_solution_for_vm_insights: true
       enable_solution_for_container_insights: true
@@ -37,10 +37,4 @@ settings:
 
 location: westeurope
 tags: {}
-advanced:
-  #resource_suffix: null
-#advanced:
-  #existing_resource_group_name                 : "my-existing-rsg" #OPTIONAL
-  #existing_log_analytics_workspace_resource_id : "my-existing-law" #OPTIONAL
-  #existing_automation_account_resource_id      : "my-existing-aa"  #OPTIONAL
-  #link_log_analytics_to_automation_account     : true              #OPTIONAL
+advanced: {}

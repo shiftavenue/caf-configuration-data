@@ -169,15 +169,3 @@ location: westeurope
 
 tags: {}
 advanced: {}
-  #resource_suffix: null
-  #custom_settings_by_resource_type:
-  #  azurerm_subnet:
-  #    connectivity:
-  #      westeurope:
-  #        DNSResolverInboundEndpoint:
-  #          delegation:
-  #            - name: "Microsoft.Network/dnsResolvers"
-  #              service_delegation:
-  #                - name: "Microsoft.Network/dnsResolvers"
-  #                  actions:
-  #                    - "Microsoft.Network/virtualNetworks/subnets/join/action"

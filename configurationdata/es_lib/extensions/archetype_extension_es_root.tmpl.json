@@ -1,0 +1,30 @@
+{
+    "extend_es_root": {
+        "policy_assignments": [
+            "Deny-Resource-Locations",
+            "Deny-RSG-Locations"
+        ],
+        "policy_definitions": [],
+        "policy_set_definitions": [],
+        "role_definitions": [
+            "Deployment Maintainer"
+        ],
+        "archetype_config": {
+            "access_control": {},
+            "parameters": {
+                "Deny-Resource-Locations": {
+                    "listOfAllowedLocations": [
+                        "westeurope",
+                        "germanywestcentral"
+                    ]
+                },
+                "Deny-RSG-Locations": {
+                    "listOfAllowedLocations": [
+                        "westeurope",
+                        "germanywestcentral"
+                    ]
+                }
+            }
+        }
+    }
+}

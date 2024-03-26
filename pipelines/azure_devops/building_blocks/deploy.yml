@@ -1,0 +1,19 @@
+parameters:
+  - name: serviceConnectionName
+    type: string
+    displayName: Service Connection Name
+
+steps:
+  - task: AzureCLI@2
+    displayName: "Deploy"
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnectionName }}
+      workingDirectory: "$(Build.SourcesDirectory)/enterprise_scale"
+      scriptType: pscore
+      addSpnToEnvironment: true
+      scriptLocation: inlineScript
+      inlineScript: |
+        Write-Host "Refreshing Plan to ensure OIDC token does not expire."
+        terraform plan -out theplan.tfplan
+        terraform apply theplan.tfplan
+      failOnStandardError: true

@@ -1,0 +1,85 @@
+parameters:
+  - name: serviceConnectionName
+    type: string
+    displayName: Service Connection Name
+  - name: terraformBackendStorageAccountName
+    type: string
+    displayName: Terraform Backend Storage Account Name
+  - name: terraformBackendStorageContainerName
+    type: string
+    displayName: Terraform Backend Storage Container Name
+  - name: terraformBackendResourceGroupName
+    type: string
+    displayName: Terraform Backend Resource Group Name
+  - name: root_id
+    type: string
+    displayName: ESLZ Root ID
+
+steps:
+  - checkout: self
+    clean: true
+  - script: |
+      if ! command -v pwsh &> /dev/null
+      then
+          sudo apt install -y wget apt-transport-https software-properties-common
+          VERSION_ID=$(lsb_release -rs)
+          wget -q https://packages.microsoft.com/config/ubuntu/$VERSION_ID/packages-microsoft-prod.deb
+          sudo dpkg -i packages-microsoft-prod.deb
+          rm packages-microsoft-prod.deb
+          sudo apt update
+          sudo apt install -y powershell
+      fi
+    displayName: "Install PowerShell Core"
+  - task: AzureCLI@2
+    name: set_variables
+    displayName: "Create Backend Configuration"
+    inputs:
+      workingDirectory: "$(Build.SourcesDirectory)/enterprise_scale"
+      azureSubscription: ${{ parameters.serviceConnectionName }}
+      addSpnToEnvironment: true
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |        
+        @"
+        terraform {
+          backend "azurerm" {
+            resource_group_name  = "${{ parameters.terraformBackendResourceGroupName }}"
+            storage_account_name = "${{ parameters.terraformBackendStorageAccountName }}"
+            container_name       = "${{ parameters.terraformBackendStorageContainerName }}"
+            key                  = "enterprise_scale"
+            use_oidc             = true
+            oidc_token           = "$env:idToken"
+            client_id            = "$env:servicePrincipalId"
+            subscription_id      = "$(az account show --query id -o tsv)"
+            tenant_id            = "$env:tenantId"
+            use_azuread_auth     = true
+          }
+        }
+        "@ | Set-Content -Path backend.tf
+  - task: AzureCLI@2
+    displayName: "Initialise remote state backend"
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnectionName }}
+      workingDirectory: "$(Build.SourcesDirectory)/enterprise_scale"
+      scriptType: bash
+      addSpnToEnvironment: true
+      scriptLocation: inlineScript
+      inlineScript: terraform init
+      failOnStandardError: true
+  - task: AzureCLI@2
+    name: generate_auto_tfvars
+    displayName: "Generate variable files"
+    inputs:
+      workingDirectory: "$(Build.SourcesDirectory)/build"
+      azureSubscription: ${{ parameters.serviceConnectionName }}
+      addSpnToEnvironment: true
+      scriptType: pscore
+      scriptLocation: inlineScript
+      inlineScript: |
+        try {
+          ./automations/ConvertTo-AutoTfvarJson.ps1 -ErrorAction Stop -RootId ${{ parameters.root_id }}
+        } catch {
+          Write-Host "Error generating variables"
+          exit 1
+        }
+        exit 0

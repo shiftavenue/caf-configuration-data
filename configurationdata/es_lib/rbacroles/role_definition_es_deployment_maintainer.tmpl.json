@@ -1,0 +1,35 @@
+{
+    "name": "72e4d4e2-ce22-4e48-aeba-22cf4df18b4c",
+    "apiVersion": "2022-04-01",
+    "type": "Microsoft.Authorization/roleDefinitions",
+    "properties": {
+        "type": "customRole",
+        "roleName": "Deployment Maintainer",
+        "description": "Maintain deployments.",
+        "assignableScopes": [
+            "${current_scope_resource_id}"
+        ],
+        "permissions": [
+            {
+                "actions": [
+                    "Microsoft.Resources/deployments/read",
+                    "Microsoft.Resources/deployments/write",
+                    "Microsoft.Resources/deployments/delete",
+                    "Microsoft.Resources/deployments/cancel/action",
+                    "Microsoft.Resources/deployments/validate/action",
+                    "Microsoft.Resources/deployments/whatIf/action",
+                    "Microsoft.Resources/deployments/exportTemplate/action",
+                    "Microsoft.Resources/deployments/operations/read",
+                    "Microsoft.Resources/deployments/operationstatuses/read",
+                    "Microsoft.Resources/deploymentScripts/read",
+                    "Microsoft.Resources/deploymentScripts/write",
+                    "Microsoft.Resources/deploymentScripts/delete",
+                    "Microsoft.Resources/deploymentScripts/logs/read"
+                ],
+                "notActions": [],
+                "dataActions": [],
+                "notDataActions": []
+            }
+        ]
+    }
+}

@@ -1,0 +1,101 @@
+parameters:
+  - name: serviceConnectionName
+    type: string
+    displayName: Service Connection Name
+  - name: artefactName
+    type: string
+    displayName: Artefact name
+    default: enterprise_scale
+
+steps:
+  - task: AzureCLI@2
+    name: plan
+    displayName: "Plan"
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+    inputs:
+      azureSubscription: ${{ parameters.serviceConnectionName }}
+      workingDirectory: "$(Build.SourcesDirectory)/enterprise_scale"
+      scriptType: pscore
+      addSpnToEnvironment: true
+      scriptLocation: inlineScript
+      inlineScript: |
+        $planPath = Join-Path $env:PIPELINE_WORKSPACE "${{parameters.artefactName}}.tfplan"
+        Write-Host "##vso[task.setvariable variable=planpath]$planPath"
+        $null = New-Item -ItemType Directory -Path (Split-Path -Path $planPath -Parent) -Force
+
+        $plan = Start-Process terraform -ArgumentList "plan -out=$planPath -detailed-exitcode" -RedirectStandardOutput plan -RedirectStandardError error -Wait -PassThru
+        if ($plan.ExitCode -eq 2)
+        {
+          Write-Host "##vso[task.setvariable variable=ChangesDetected;isOutput=true]true"
+
+          $run = terraform show -json $planPath | ConvertFrom-Json
+          $changes = $run.resource_changes | Group-Object {$_.change.actions[0]} -AsHashTable -AsString
+          $details = $((terraform show -no-color $planPath) -join "`r`n")
+          $detailsComment = -join @(
+            "`r`n`r`nChanged resources:`r`n`r`n",
+            ($changes.update.address -join "`r`n"),
+            "`r`n`r`nDeleted resources:`r`n`r`n",
+            ($changes.delete.address -join "`r`n"),
+            "`r`n`r`nCreated resources:`r`n`r`n",
+            ($changes.create.address -join "`r`n")
+          )
+          $text = @"
+          # Terraform Plan Summary $(System.StageName)
+
+          Changes: $($changes.update.count)  
+          Deletions: $($changes.delete.count)  
+          Creations: $($changes.create.count)  
+
+          <details>
+
+          <summary>Details</summary>
+
+          ``````output
+              {0}
+          ``````
+          </details>
+        "@
+        ($text -f $details) | Set-Content summary.md
+
+          if ($env:SYSTEM_PULLREQUEST_PULLREQUESTID)
+          {
+            $content = $text -f $detailsComment
+            if ($content.Length -gt 150000)
+            {
+                $abbreviated = -join @($content.Substring(0, 140000), "```````n...`n</details>`n")
+            }
+            else
+            {
+                $abbreviated = $content
+            }
+            $body = @{
+                comments = [hashtable[]](@{
+                        parentCommentId = 0
+                        content         = $abbreviated
+                        commentType     = 1
+                    })
+                status   = 1
+            } | ConvertTo-Json
+
+            $url = "$($env:SYSTEM_TEAMFOUNDATIONCOLLECTIONURI)$env:SYSTEM_TEAMPROJECTID/_apis/git/repositories/$($env:BUILD_REPOSITORY_NAME)/pullRequests/$($env:SYSTEM_PULLREQUEST_PULLREQUESTID)/threads?api-version=5.1"
+            Write-Host "Attempting to post comment to $url"
+            $null = Invoke-RestMethod -Uri $url -Method POST -Headers @{Authorization = "Bearer $env:SYSTEM_ACCESSTOKEN"} -Body $Body -ContentType application/json
+          }
+          Write-Host "##vso[task.uploadsummary]$((Get-Item summary.md).FullName)"
+          exit
+        }
+        elseif ($plan.ExitCode -eq 0)
+        {
+          Write-Host "##vso[task.setvariable variable=ChangesDetected;isOutput=true]false"
+          exit
+        }
+        else
+        {
+          Get-Content error -ErrorAction SilentlyContinue
+          throw "Error during planning phase"
+        }
+
+      failOnStandardError: true
+  - publish: $(planpath)
+    artifact: ${{parameters.artefactName}}
